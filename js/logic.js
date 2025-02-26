@@ -6,7 +6,13 @@ const gameBoard = (function () {
         [0, 0, 0],
         [0, 1, 0]];
 
-    const getBoardPosition = (row, column) => board[row][column];
+    // Methods for the gameBoard "class"
+
+    // Gets the value of that particular cell given a row and column
+    const getCellValue = (row, column) => board[row][column];
+
+    // Prints out a String representation of the current game board
+    // This helps visualize what the board looks like.
     const getBoardState = () => {
         let boardState = "";
         for (let row = 0; row < board.length; row++) {
@@ -14,7 +20,11 @@ const gameBoard = (function () {
         }
         console.log(boardState);
     };
+
+    // Gets an Array of values that corresponds with a given row
     const getRow = (row) => board[row];
+
+    // Gets an Array of values that corresponds with a given column
     const getColumn = (column) => {
         const verticalNums = [];
         for (let row = 0; row < board.length; row++) {
@@ -22,11 +32,13 @@ const gameBoard = (function () {
         }
         return verticalNums;
     };
+
+    // Changes the position of a cell based on a given row, column, and value
     const changePosition = (row, column, value) => {
         board[row][column] = value;
     };
 
-    return { getBoardPosition, getBoardState, getRow, getColumn, changePosition };
+    return { getCellValue, getBoardState, getRow, getColumn, changePosition };
 })();
 
 // This IIFE module pattern handles all the game logic itself. It is NOT concerned with player input right now
@@ -35,9 +47,5 @@ const game = (function () {
 })();
 
 
-console.log(`The value at [0][0] is: ${gameBoard.getBoardPosition(0, 0)}`);
-console.log("Now it's changing...")
-gameBoard.changePosition(2, 2, "X");
-console.log(`Now the value at [0][0] is: ${gameBoard.getBoardPosition(0, 0)}`);
-console.log(`Now the board state is:`);
+console.log(`The board state is:`);
 gameBoard.getBoardState();
