@@ -82,7 +82,8 @@ const game = (function () {
         O: ["O", "O", "O"]
     };
 
-
+    // Checks if there's a winner at that particular spot. As in, it checks the surrounding row and column
+    // It returns true if there's a winner and false if there isn't
     const checkWinner = (row, column) => {
         const xRowWin = arraysEqual(gameBoard.getRow(row), winningValues.X);
         const xColumnWin = arraysEqual(gameBoard.getColumn(column), winningValues.X);
@@ -103,12 +104,15 @@ const game = (function () {
         return false;
     }
 
+    // Checks if there's a tie or no winners
+    // Returns true if there is a tie, false if there isn't
     const checkTie = (row, column) => {
         // If there is no winner at a given row and column AND the gameBoard is filled we can check if there's a tie
         if (!checkWinner(row, column) && gameBoard.isFilled()) {
             console.log("It's a tie tarnished!");
             return true;
         }
+        return false;
     }
 
     return { checkWinner, checkTie };
