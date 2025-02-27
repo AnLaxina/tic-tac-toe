@@ -4,7 +4,7 @@ const gameBoard = (function () {
     const board =
         [[0, 0, 0],
         [0, 0, 0],
-        [0, 1, 0]];
+        [0, 0, 0]];
 
     // Methods for the gameBoard "class"
 
