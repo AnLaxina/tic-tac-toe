@@ -94,25 +94,36 @@ const game = (function () {
 
         if (xRowWin || xDiagonalWin || xColumnWin) {
             console.log("Player X wins!");
+            return true;
         }
         else if (oRowWin || oDiagonalWin || oColumnWin) {
             console.log("Player O wins!");
+            return true;
+        }
+        return false;
+    }
+
+    const checkTie = (row, column) => {
+        // If there is no winner at a given row and column AND the gameBoard is filled we can check if there's a tie
+        if (!checkWinner(row, column) && gameBoard.isFilled()) {
+            console.log("It's a tie tarnished!");
+            return true;
         }
     }
 
-    return { checkWinner };
+    return { checkWinner, checkTie };
 })();
 
 
-gameBoard.changePosition(0, 0, "X");
+gameBoard.changePosition(0, 0, "O");
 gameBoard.changePosition(1, 0, "X");
 gameBoard.changePosition(2, 0, "X");
 gameBoard.changePosition(0, 1, "X");
-gameBoard.changePosition(1, 1, "X");
-gameBoard.changePosition(2, 1, "X");
+gameBoard.changePosition(1, 1, "O");
+gameBoard.changePosition(2, 1, "O");
 gameBoard.changePosition(0, 2, "X");
-gameBoard.changePosition(1, 2, "X");
+gameBoard.changePosition(1, 2, "O");
 gameBoard.changePosition(2, 2, "X");
 console.log(`The board state is:`);
 gameBoard.getBoardState();
-console.log(`Is the board filled: ${gameBoard.isFilled()}`);
+game.checkTie(0, 0);
