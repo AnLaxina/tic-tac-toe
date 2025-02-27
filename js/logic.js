@@ -1,3 +1,13 @@
+// Since JavaScript doesn't have a native way to check array equality based on values, gotta implement it
+// yourself :(
+function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+}
+
 // Gameboard Object via an IIFE module pattern
 const gameBoard = (function () {
 
@@ -52,7 +62,17 @@ const gameBoard = (function () {
         board[row][column] = value;
     };
 
-    return { getCellValue, getBoardState, getRow, getColumn, getDiagonal, changePosition };
+    // Checks if the board has already been filled by X's and O's (like the song!)
+    const isFilled = () => {
+        for (let i = 0; i < board.length; i++) {
+            if (getRow(i).includes(0))
+                return false;
+        }
+        return true;
+
+    }
+
+    return { getCellValue, getBoardState, getRow, getColumn, getDiagonal, changePosition, isFilled };
 })();
 
 // This IIFE module pattern handles all the game logic itself. It is NOT concerned with player input right now
@@ -61,15 +81,7 @@ const game = (function () {
         X: ["X", "X", "X"],
         O: ["O", "O", "O"]
     };
-    // Since JavaScript doesn't have a native way to check array equality based on values, gotta implement it
-    // yourself :(
-    function arraysEqual(arr1, arr2) {
-        if (arr1.length !== arr2.length) return false;
-        for (let i = 0; i < arr1.length; i++) {
-            if (arr1[i] !== arr2[i]) return false;
-        }
-        return true;
-    }
+
 
     const checkWinner = (row, column) => {
         const xRowWin = arraysEqual(gameBoard.getRow(row), winningValues.X);
@@ -92,12 +104,15 @@ const game = (function () {
 })();
 
 
-gameBoard.changePosition(0, 1, "O");
-gameBoard.changePosition(1, 2, "O");
-gameBoard.changePosition(2, 2, "O");
-gameBoard.changePosition(1, 1, "O");
-gameBoard.changePosition(0, 2, "O");
+gameBoard.changePosition(0, 0, "X");
+gameBoard.changePosition(1, 0, "X");
 gameBoard.changePosition(2, 0, "X");
+gameBoard.changePosition(0, 1, "X");
+gameBoard.changePosition(1, 1, "X");
+gameBoard.changePosition(2, 1, "X");
+gameBoard.changePosition(0, 2, "X");
+gameBoard.changePosition(1, 2, "X");
+gameBoard.changePosition(2, 2, "X");
 console.log(`The board state is:`);
 gameBoard.getBoardState();
-game.checkWinner(0, 2);
+console.log(`Is the board filled: ${gameBoard.isFilled()}`);
