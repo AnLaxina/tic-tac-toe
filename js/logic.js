@@ -57,15 +57,47 @@ const gameBoard = (function () {
 
 // This IIFE module pattern handles all the game logic itself. It is NOT concerned with player input right now
 const game = (function () {
+    const winningValues = {
+        X: ["X", "X", "X"],
+        O: ["O", "O", "O"]
+    };
+    // Since JavaScript doesn't have a native way to check array equality based on values, gotta implement it
+    // yourself :(
+    function arraysEqual(arr1, arr2) {
+        if (arr1.length !== arr2.length) return false;
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) return false;
+        }
+        return true;
+    }
 
+    const checkWinner = (row, column) => {
+        const xRowWin = arraysEqual(gameBoard.getRow(row), winningValues.X);
+        const xColumnWin = arraysEqual(gameBoard.getColumn(column), winningValues.X);
+        const xDiagonalWin = arraysEqual(gameBoard.getDiagonal("left"), winningValues.X) || arraysEqual(gameBoard.getDiagonal("right"), winningValues.X);
+
+        const oRowWin = arraysEqual(gameBoard.getRow(row), winningValues.O);
+        const oColumnWin = arraysEqual(gameBoard.getColumn(column), winningValues.O);
+        const oDiagonalWin = arraysEqual(gameBoard.getDiagonal("left"), winningValues.O) || arraysEqual(gameBoard.getDiagonal("right"), winningValues.O);
+
+        if (xRowWin || xDiagonalWin || xColumnWin) {
+            console.log("Player X wins!");
+        }
+        else if (oRowWin || oDiagonalWin || oColumnWin) {
+            console.log("Player O wins!");
+        }
+    }
+
+    return { checkWinner };
 })();
 
 
-gameBoard.changePosition(0, 0, "X");
-gameBoard.changePosition(1, 1, "X");
-gameBoard.changePosition(0, 2, "X");
+gameBoard.changePosition(0, 1, "O");
+gameBoard.changePosition(1, 2, "O");
+gameBoard.changePosition(2, 2, "O");
+gameBoard.changePosition(1, 1, "O");
+gameBoard.changePosition(0, 2, "O");
 gameBoard.changePosition(2, 0, "X");
 console.log(`The board state is:`);
 gameBoard.getBoardState();
-console.log(`The diagonal starting from the top left is: ${gameBoard.getDiagonal("left")}`)
-console.log(`The diagonal starting from the top right is: ${gameBoard.getDiagonal("right")}`)
+game.checkWinner(0, 2);
