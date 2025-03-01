@@ -1,0 +1,18 @@
+body {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+}
+
+.gameboard {
+    background-color: greenyellow;
+    border: black 10px solid;
+    border-radius: 15px;
+    width: 600px;
+    height: 600px;
+}
