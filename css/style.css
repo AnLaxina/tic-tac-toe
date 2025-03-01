@@ -1,8 +1,15 @@
+@font-face {
+    font-family: kanit-regular;
+    src: url("../font/Kanit-Regular.ttf");
+}
+
+
 body {
     display: grid;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-family: kanit-regular, monospace;
 }
 
 header {
