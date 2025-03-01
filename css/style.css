@@ -18,8 +18,19 @@ header {
 
 .gameboard {
     background-color: greenyellow;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     border: black 10px solid;
     border-radius: 15px;
     width: 600px;
     height: 600px;
+}
+
+.perfect-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    border: black 2px solid;
 }
