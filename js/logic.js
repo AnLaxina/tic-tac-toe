@@ -118,16 +118,22 @@ const game = (function () {
     return { checkWinner, checkTie };
 })();
 
+const domManager = (function () {
+    const cellNodes = [];
 
-gameBoard.changePosition(0, 0, "O");
-gameBoard.changePosition(1, 0, "X");
-gameBoard.changePosition(2, 0, "X");
-gameBoard.changePosition(0, 1, "X");
-gameBoard.changePosition(1, 1, "O");
-gameBoard.changePosition(2, 1, "O");
-gameBoard.changePosition(0, 2, "X");
-gameBoard.changePosition(1, 2, "O");
-gameBoard.changePosition(2, 2, "X");
+    const retrieveCellNodes = () => {
+        const elements = document.querySelectorAll(".perfect-cell")
+        elements.forEach(element => {
+            const rowValue = element.getAttribute("data-row");
+            const columnValue = element.getAttribute("data-column");
+
+            console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
+        });
+    };
+
+    return { retrieveCellNodes };
+})();
+
 console.log(`The board state is:`);
 gameBoard.getBoardState();
-game.checkTie(0, 0);
+domManager.retrieveCellNodes();
