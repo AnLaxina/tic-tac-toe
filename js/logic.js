@@ -122,6 +122,9 @@ const domManager = (function () {
     const cellNodes = [];
     const elements = document.querySelectorAll(".perfect-cell")
     const dialog = document.querySelector("dialog");
+    const form = document.querySelector("form");
+    const submitDialog = document.querySelector(".submit-dialog");
+
     // Show dialog immediately when the page loads for player selection
     dialog.showModal();
 
@@ -132,13 +135,17 @@ const domManager = (function () {
         });
     };
 
-    // Add click event listeners for each cell
+    // Add click event listeners for each cell & any other node
     const addEventListeners = () => {
         for (const element of cellNodes) {
             element.addEventListener("click", function () {
                 changeGameBoardState(element);
             })
         }
+
+        submitDialog.addEventListener("click", function () {
+            checkFormRequiredFields();
+        })
     }
 
     function changeGameBoardState(e) {
@@ -151,6 +158,15 @@ const domManager = (function () {
 
         // For testing, prints out the board state every time a cell is clicked
         gameBoard.getBoardState();
+    }
+
+    function checkFormRequiredFields() {
+        // Using JavaScript to check if all fields have been filled in before submitting
+        for (const element of form.querySelectorAll("[required]")) {
+            if (!element.reportValidity()) {
+                return;
+            }
+        }
     }
 
     return { retrieveCellNodes, addEventListeners };
