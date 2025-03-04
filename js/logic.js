@@ -132,17 +132,18 @@ const domManager = (function () {
     const addEventListeners = () => {
         for (const element of cellNodes) {
             element.addEventListener("click", function () {
-                clickEvent(element);
+                changeGameBoardState(element);
             })
         }
     }
 
-    function clickEvent(e) {
-        // e.textContent = e.textContent === "O" ? "X" : "O";
+    function changeGameBoardState(e) {
         const rowValue = e.getAttribute("data-row");
         const columnValue = e.getAttribute("data-column");
         console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
         gameBoard.changePosition(rowValue, columnValue, e.textContent);
+        // Always checks the current cell if a winner has been found
+        game.checkWinner(rowValue, columnValue);
 
         // For testing, prints out the board state every time a cell is clicked
         gameBoard.getBoardState();
