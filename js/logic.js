@@ -124,10 +124,7 @@ const domManager = (function () {
     const retrieveCellNodes = () => {
 
         elements.forEach(element => {
-            const rowValue = element.getAttribute("data-row");
-            const columnValue = element.getAttribute("data-column");
             cellNodes.push(element);
-            console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
         });
     };
 
@@ -141,7 +138,14 @@ const domManager = (function () {
     }
 
     function clickEvent(e) {
-        e.textContent = e.textContent === "O" ? "X" : "O";
+        // e.textContent = e.textContent === "O" ? "X" : "O";
+        const rowValue = e.getAttribute("data-row");
+        const columnValue = e.getAttribute("data-column");
+        console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
+        gameBoard.changePosition(rowValue, columnValue, e.textContent);
+
+        // For testing, prints out the board state every time a cell is clicked
+        gameBoard.getBoardState();
     }
 
     return { retrieveCellNodes, addEventListeners };
