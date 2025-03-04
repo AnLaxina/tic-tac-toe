@@ -35,3 +35,8 @@ header {
     font-size: 5rem;
     border: black 2px solid;
 }
+
+.perfect-cell:hover {
+    background-color: #89AC46;
+    cursor: pointer;
+}
