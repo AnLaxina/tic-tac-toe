@@ -120,20 +120,34 @@ const game = (function () {
 
 const domManager = (function () {
     const cellNodes = [];
-
+    const elements = document.querySelectorAll(".perfect-cell")
     const retrieveCellNodes = () => {
-        const elements = document.querySelectorAll(".perfect-cell")
+
         elements.forEach(element => {
             const rowValue = element.getAttribute("data-row");
             const columnValue = element.getAttribute("data-column");
-
+            cellNodes.push(element);
             console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
         });
     };
 
-    return { retrieveCellNodes };
+    // Add click event listeners for each cell
+    const addEventListeners = () => {
+        for (const element of cellNodes) {
+            element.addEventListener("click", function () {
+                clickEvent(element);
+            })
+        }
+    }
+
+    function clickEvent(e) {
+        e.textContent = e.textContent === "O" ? "X" : "O";
+    }
+
+    return { retrieveCellNodes, addEventListeners };
 })();
 
 console.log(`The board state is:`);
 gameBoard.getBoardState();
 domManager.retrieveCellNodes();
+domManager.addEventListeners();
