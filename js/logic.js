@@ -120,6 +120,7 @@ const game = (function () {
 
 const domManager = (function () {
     const cellNodes = [];
+    let formData = undefined;
     const elements = document.querySelectorAll(".perfect-cell")
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
@@ -143,9 +144,11 @@ const domManager = (function () {
             })
         }
 
+        // Add event listener for the submit buttton
         submitDialog.addEventListener("click", function () {
-            checkFormRequiredFields();
+            returnDialogChoices();
         })
+
     }
 
     function changeGameBoardState(e) {
@@ -164,12 +167,24 @@ const domManager = (function () {
         // Using JavaScript to check if all fields have been filled in before submitting
         for (const element of form.querySelectorAll("[required]")) {
             if (!element.reportValidity()) {
-                return;
+                return false;
             }
         }
+        return true;
     }
 
-    return { retrieveCellNodes, addEventListeners };
+    function returnDialogChoices() {
+        if (checkFormRequiredFields()) {
+            formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            console.log(data);
+            dialog.close();
+        }
+
+
+    }
+
+    return { retrieveCellNodes, addEventListeners, formData };
 })();
 
 console.log(`The board state is:`);
