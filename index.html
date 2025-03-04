@@ -24,6 +24,38 @@
             <div class="perfect-cell" data-row="2" data-column="1"></div>
             <div class="perfect-cell" data-row="2" data-column="2"></div>
         </div>
+
+        <dialog>
+            <!-- <button type="button" class="close-button">X</button> -->
+            <h3>Player Selection</h3>
+            <form action="#" method="post">
+                <div>
+                    <p>Player 1: </p>
+                    <input type="radio" id="O-p1" value="O" name="player-1" required>
+                    <label for="O-p1">O</label>
+                    <input type="radio" id="X-p1" value="X" name="player-1">
+                    <label for="X-p1">X</label>
+                </div>
+
+                <div>
+                    <p>Player 2: </p>
+                    <input type="radio" id="O-p2" value="O" name="player-2" required>
+                    <label for="O-p2">O</label>
+                    <input type="radio" id="X-p2" value="X" name="player-2">
+                    <label for="X-p2">X</label>
+                </div>
+
+                <div>
+                    <p>Who goes first: </p>
+                    <input type="radio" id="first-p1" value="first-p1" name="first" required>
+                    <label for="first-p1">Player 1</label>
+                    <input type="radio" id="first-p2" value="first-p2" name="first">
+                    <label for="first-p2">Player 2</label>
+                </div>
+
+                <button type="button" class="submit-dialog">Submit</button>
+            </form>
+        </dialog>
     </main>
 </body>
 </html>

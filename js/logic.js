@@ -121,6 +121,10 @@ const game = (function () {
 const domManager = (function () {
     const cellNodes = [];
     const elements = document.querySelectorAll(".perfect-cell")
+    const dialog = document.querySelector("dialog");
+    // Show dialog immediately when the page loads for player selection
+    dialog.showModal();
+
     const retrieveCellNodes = () => {
 
         elements.forEach(element => {
