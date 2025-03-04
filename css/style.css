@@ -34,6 +34,8 @@ header {
     align-items: center;
     font-size: 5rem;
     border: black 2px solid;
+    /* Prevents that weird highlight effect on the text whenever the cell is double clicked*/
+    user-select: none;
 }
 
 .perfect-cell:hover {
