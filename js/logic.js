@@ -115,11 +115,16 @@ const game = (function () {
         return false;
     }
 
-    const playTurn = (dataFirstPlayer) => {
-        console.log(dataFirstPlayer);
+    const checkFirstPlayer = (dataFirstPlayer) => {
+        if (dataFirstPlayer === "first-p1") {
+            return "player-1";
+        }
+        else {
+            return "player-2";
+        }
     }
 
-    return { checkWinner, checkTie, playTurn };
+    return { checkWinner, checkTie, checkFirstPlayer };
 })();
 
 const domManager = (function () {
@@ -176,9 +181,9 @@ const domManager = (function () {
         // For testing, prints out the form data
         console.log(data);
 
-        game.playTurn(data["first"]);
+        let playerStartChoice = game.checkFirstPlayer(data["first"]);
 
-        e.textContent = data["player-1"];
+        e.textContent = data[playerStartChoice];
     }
 
     function checkFormRequiredFields() {
