@@ -179,14 +179,18 @@ const domManager = (function () {
     function changeGameBoardState(e) {
         const rowValue = e.getAttribute("data-row");
         const columnValue = e.getAttribute("data-column");
-        // Always checks the current cell if a winner has been found
-        game.checkWinner(rowValue, columnValue);
+
         console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
-        // gameBoard.changePosition(rowValue, columnValue, e.textContent);
 
         let playerStartChoice = game.checkFirstPlayer(data["first"]);
-        game.playTurn();
+
         e.textContent = data[playerStartChoice];
+
+        gameBoard.changePosition(rowValue, columnValue, e.textContent);
+        game.playTurn();
+        // Always checks the current cell if a winner has been found
+        game.checkWinner(rowValue, columnValue);
+
     }
 
     function checkFormRequiredFields() {
