@@ -120,7 +120,7 @@ const game = (function () {
 
 const domManager = (function () {
     const cellNodes = [];
-    let formData = undefined;
+    let data = undefined;
     const elements = document.querySelectorAll(".perfect-cell")
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
@@ -149,6 +149,13 @@ const domManager = (function () {
             returnDialogChoices();
         })
 
+        // Prevents user from closing the dialog with the escape key
+        window.addEventListener("keydown", (key) => {
+            if (key.code === "Escape") {
+                key.preventDefault();
+            }
+        })
+
     }
 
     function changeGameBoardState(e) {
@@ -161,6 +168,9 @@ const domManager = (function () {
 
         // For testing, prints out the board state every time a cell is clicked
         gameBoard.getBoardState();
+
+        // For testing, prints out the form data
+        console.log(data);
     }
 
     function checkFormRequiredFields() {
@@ -175,8 +185,8 @@ const domManager = (function () {
 
     function returnDialogChoices() {
         if (checkFormRequiredFields()) {
-            formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+            const formData = new FormData(form);
+            data = Object.fromEntries(formData.entries());
             console.log(data);
             dialog.close();
         }
@@ -184,7 +194,7 @@ const domManager = (function () {
 
     }
 
-    return { retrieveCellNodes, addEventListeners, formData };
+    return { retrieveCellNodes, addEventListeners, data };
 })();
 
 console.log(`The board state is:`);
