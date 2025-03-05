@@ -115,7 +115,11 @@ const game = (function () {
         return false;
     }
 
-    return { checkWinner, checkTie };
+    const playTurn = (dataFirstPlayer) => {
+        console.log(dataFirstPlayer);
+    }
+
+    return { checkWinner, checkTie, playTurn };
 })();
 
 const domManager = (function () {
@@ -162,7 +166,7 @@ const domManager = (function () {
         const rowValue = e.getAttribute("data-row");
         const columnValue = e.getAttribute("data-column");
         console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
-        gameBoard.changePosition(rowValue, columnValue, e.textContent);
+        // gameBoard.changePosition(rowValue, columnValue, e.textContent);
         // Always checks the current cell if a winner has been found
         game.checkWinner(rowValue, columnValue);
 
@@ -171,6 +175,10 @@ const domManager = (function () {
 
         // For testing, prints out the form data
         console.log(data);
+
+        game.playTurn(data["first"]);
+
+        e.textContent = data["player-1"];
     }
 
     function checkFormRequiredFields() {
