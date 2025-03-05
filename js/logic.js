@@ -126,9 +126,9 @@ const game = (function () {
         }
     }
 
-    const playTurn = () => {
+    const playTurn = (row, column) => {
 
-
+        console.log(`Cell value is ${gameBoard.getCellValue(row, column)}`);
         // For testing, prints out the board state every time a cell is clicked
         gameBoard.getBoardState();
     }
@@ -187,7 +187,7 @@ const domManager = (function () {
         e.textContent = data[playerStartChoice];
 
         gameBoard.changePosition(rowValue, columnValue, e.textContent);
-        game.playTurn();
+        game.playTurn(rowValue, columnValue);
         // Always checks the current cell if a winner has been found
         game.checkWinner(rowValue, columnValue);
 
