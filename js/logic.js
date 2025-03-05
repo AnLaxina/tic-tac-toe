@@ -115,6 +115,8 @@ const game = (function () {
         return false;
     }
 
+    // A method for checking who goes first.
+    // param dataFirstPlayer: takes in the submitted form data from the dialog and specifically uses data["first"]
     const checkFirstPlayer = (dataFirstPlayer) => {
         if (dataFirstPlayer === "first-p1") {
             return "player-1";
@@ -124,7 +126,14 @@ const game = (function () {
         }
     }
 
-    return { checkWinner, checkTie, checkFirstPlayer };
+    const playTurn = () => {
+
+
+        // For testing, prints out the board state every time a cell is clicked
+        gameBoard.getBoardState();
+    }
+
+    return { checkWinner, checkTie, checkFirstPlayer, playTurn };
 })();
 
 const domManager = (function () {
@@ -170,19 +179,13 @@ const domManager = (function () {
     function changeGameBoardState(e) {
         const rowValue = e.getAttribute("data-row");
         const columnValue = e.getAttribute("data-column");
-        console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
-        // gameBoard.changePosition(rowValue, columnValue, e.textContent);
         // Always checks the current cell if a winner has been found
         game.checkWinner(rowValue, columnValue);
-
-        // For testing, prints out the board state every time a cell is clicked
-        gameBoard.getBoardState();
-
-        // For testing, prints out the form data
-        console.log(data);
+        console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
+        // gameBoard.changePosition(rowValue, columnValue, e.textContent);
 
         let playerStartChoice = game.checkFirstPlayer(data["first"]);
-
+        game.playTurn();
         e.textContent = data[playerStartChoice];
     }
 
