@@ -133,7 +133,9 @@ const game = (function () {
         gameBoard.getBoardState();
     }
 
-    return { checkWinner, checkTie, checkFirstPlayer, playTurn };
+    const alreadyPlaced = (row, column) => gameBoard.getCellValue(row, column) === 0 ? false : true;
+
+    return { checkWinner, checkTie, checkFirstPlayer, playTurn, alreadyPlaced };
 })();
 
 const domManager = (function () {
