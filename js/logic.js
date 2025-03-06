@@ -230,11 +230,28 @@ const domManager = (function () {
         if (checkFormRequiredFields()) {
             const formData = new FormData(form);
             data = Object.fromEntries(formData.entries());
-            console.log(data);
-            dialog.close();
+            if (bothOptionsValid()) {
+                console.log(data);
+                dialog.close();
+            } else {
+                alert("Sorry! Both players have selected the same choice! Try again!");
+                data = Object.fromEntries(formData.entries());
+
+            }
+
         }
 
 
+    }
+
+    // This method checks if a player has selected both options for Player 1 and 2.
+    // ex. Player 1 chooses to play X & Player 2 also chooses to play X,
+    // it will generate an alert that they need to select again
+    function bothOptionsValid() {
+        if (data["player-1"] === data["player-2"]) {
+            return false;
+        }
+        return true;
     }
 
     return { retrieveCellNodes, addEventListeners, data };
