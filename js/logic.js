@@ -231,6 +231,7 @@ const domManager = (function () {
             const formData = new FormData(form);
             data = Object.fromEntries(formData.entries());
             if (bothOptionsValid()) {
+                data = Object.fromEntries(formData.entries());
                 console.log(data);
                 dialog.close();
             } else {
