@@ -81,6 +81,8 @@ const game = (function () {
         X: ["X", "X", "X"],
         O: ["O", "O", "O"]
     };
+    let player1Turn = false;
+    let player2Turn = false;
 
     // Checks if there's a winner at that particular spot. As in, it checks the surrounding row and column
     // It returns true if there's a winner and false if there isn't
@@ -126,9 +128,18 @@ const game = (function () {
         }
     }
 
-    const playTurn = (row, column) => {
+    const playTurn = (row, column, firstPlayer) => {
+        if (firstPlayer === "player-1") {
+            player1Turn = true;
+        }
+        else if (firstPlayer === "player-2") {
+            player2Turn = true;
+        }
+        // I'm gonna forget my thought process so:
+        // every time the player clicks a cell, we always check if that cell has been placed already
+        // if not, we can place one at that location, otherwise, don't change jack Tarnished.
+        // once a cell has been placed, we swap the player1Turn and the player2Turn like a pattern
 
-        console.log(`Cell value is ${gameBoard.getCellValue(row, column)}`);
         // For testing, prints out the board state every time a cell is clicked
         gameBoard.getBoardState();
     }
@@ -181,18 +192,17 @@ const domManager = (function () {
     function changeGameBoardState(e) {
         const rowValue = e.getAttribute("data-row");
         const columnValue = e.getAttribute("data-column");
-
-        console.log(`rowValue = ${rowValue} columnValue = ${columnValue}`);
-
         let playerStartChoice = game.checkFirstPlayer(data["first"]);
 
         e.textContent = data[playerStartChoice];
 
-        gameBoard.changePosition(rowValue, columnValue, e.textContent);
-        game.playTurn(rowValue, columnValue);
-        // Always checks the current cell if a winner has been found
-        game.checkWinner(rowValue, columnValue);
+        if (!game.alreadyPlaced(rowValue, columnValue)) {
+            gameBoard.changePosition(rowValue, columnValue, e.textContent);
+            game.playTurn(rowValue, columnValue);
+            // Always checks the current cell if a winner has been found
+            game.checkWinner(rowValue, columnValue);
 
+        }
     }
 
     function checkFormRequiredFields() {
