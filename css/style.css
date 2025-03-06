@@ -15,6 +15,7 @@ body {
 
 header {
     text-align: center;
+    height: 50px;
 }
 
 form {
@@ -59,4 +60,12 @@ form {
 .submit-dialog:hover {
     cursor: pointer;
     background-color: lightgray;
+}
+
+.player-scores {
+    display: flex;
+    width: 500px;
+    height: 50px;
+    justify-content: space-between;
+
 }
