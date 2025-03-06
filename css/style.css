@@ -17,6 +17,12 @@ header {
     text-align: center;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .gameboard {
     background-color: greenyellow;
     display: grid;
@@ -41,4 +47,16 @@ header {
 .perfect-cell:hover {
     background-color: #89AC46;
     cursor: pointer;
+}
+
+.submit-dialog {
+    font-family: kanit-regular, monospace;
+    width: 100px;
+    border-radius: 15px;
+    align-self: center;
+}
+
+.submit-dialog:hover {
+    cursor: pointer;
+    background-color: lightgray;
 }
