@@ -128,7 +128,7 @@ const game = (function () {
         }
     }
 
-    const playTurn = (row, column, firstPlayer) => {
+    const playTurn = (firstPlayer) => {
         if (firstPlayer === "player-1") {
             player1Turn = true;
         }
@@ -140,8 +140,16 @@ const game = (function () {
         // if not, we can place one at that location, otherwise, don't change jack Tarnished.
         // once a cell has been placed, we swap the player1Turn and the player2Turn like a pattern
 
-        // For testing, prints out the board state every time a cell is clicked
-        gameBoard.getBoardState();
+        if (player1Turn) {
+            player1Turn = false;
+            player2Turn = true;
+            return "player-1";
+        }
+        else {
+            player2Turn = false;
+            player1Turn = true;
+            return "player-2";
+        }
     }
 
     const alreadyPlaced = (row, column) => gameBoard.getCellValue(row, column) === 0 ? false : true;
@@ -194,13 +202,16 @@ const domManager = (function () {
         const columnValue = e.getAttribute("data-column");
         let playerStartChoice = game.checkFirstPlayer(data["first"]);
 
-        e.textContent = data[playerStartChoice];
 
+        // Only changes the position of the board if there HAS NOT BEEN a filled cell based on the row and column
         if (!game.alreadyPlaced(rowValue, columnValue)) {
+
+            let currentPlayerTurn = game.playTurn(playerStartChoice);
+            e.textContent = data[currentPlayerTurn];
             gameBoard.changePosition(rowValue, columnValue, e.textContent);
-            game.playTurn(rowValue, columnValue);
+            gameBoard.getBoardState();
             // Always checks the current cell if a winner has been found
-            game.checkWinner(rowValue, columnValue);
+            game.checkTie(rowValue, columnValue);
 
         }
     }
