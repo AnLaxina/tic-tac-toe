@@ -84,6 +84,13 @@ const game = (function () {
     let player1Turn = false;
     let player2Turn = false;
 
+    // Obtain DOM things such as the player score's text, and a "You win!" dialog (that I'll implement shortly)
+    let playerXScore = 0;
+    let playerOScore = 0;
+    // note for future me: WORK ON THIS FUNCTIONALITY where I take the score and update it accordingly
+    const playerXScoreText = document.querySelector(".player-1-score");
+    const playerOScoreText = document.querySelector(".player-2-score");
+
     // Checks if there's a winner at that particular spot. As in, it checks the surrounding row and column
     // It returns true if there's a winner and false if there isn't
     const checkWinner = (row, column) => {
@@ -97,6 +104,8 @@ const game = (function () {
 
         if (xRowWin || xDiagonalWin || xColumnWin) {
             console.log("Player X wins!");
+            playerXScoreText.textContent = `Player X Score: ${++playerXScore}`;
+
             return true;
         }
         else if (oRowWin || oDiagonalWin || oColumnWin) {
