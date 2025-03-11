@@ -108,6 +108,7 @@ const game = (function () {
         }
         else if (oRowWin || oDiagonalWin || oColumnWin) {
             console.log("Player O wins!");
+            playerOScoreText.textContent = `Player O Score: ${++playerOScore}`;
             return true;
         }
         return false;
