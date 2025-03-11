@@ -148,6 +148,9 @@ const domManager = (function () {
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
     const submitDialog = document.querySelector(".submit-dialog");
+    // Test DOMs for the win screen
+    const testWinButton = document.querySelector(".test-winscreen");
+    const winDialog = document.querySelector(".win-screen");
     let firstTime = true;
     let currentPlayerTurn = undefined;
 
@@ -179,6 +182,11 @@ const domManager = (function () {
             if (key.code === "Escape") {
                 key.preventDefault();
             }
+        })
+
+        // Add event listener for test win dialog (will delete later! this is just for testing)
+        testWinButton.addEventListener("click", function () {
+            winDialog.showModal();
         })
 
     }
