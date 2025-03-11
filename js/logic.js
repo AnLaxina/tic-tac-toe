@@ -201,6 +201,7 @@ const domManager = (function () {
         changePlayersButton.addEventListener("click", () => console.log("hello you clicked changeplayers!"));
         rematchButton.addEventListener("click", () => {
             rematch();
+            clearScreen();
         });
 
         // Add event listener for test win dialog (will delete later! this is just for testing)
@@ -282,13 +283,20 @@ const domManager = (function () {
         return true;
     }
 
-    // Rematch button function
+    // Rematch button function, clears the gameBoard state but not the actual screen itself
     function rematch() {
         console.log("Board state before restart is: ");
         gameBoard.getBoardState();
         gameBoard.restartBoard();
         console.log("Board state after restart is:");
         gameBoard.getBoardState();
+    }
+
+    // Clears the actual gameboard that is shown on the screen
+    function clearScreen() {
+        for (const perfectCell of document.querySelectorAll(".perfect-cell")) {
+            perfectCell.textContent = "";
+        }
     }
 
     return { retrieveCellNodes, addEventListeners, data };
