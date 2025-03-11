@@ -11,7 +11,13 @@ function arraysEqual(arr1, arr2) {
 // Gameboard Object via an IIFE module pattern
 const gameBoard = (function () {
 
-    const board =
+    let board =
+        [[0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]];
+
+    // This board is for when the game restarts if a user clicks rematch
+    const originalBoard =
         [[0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]];
@@ -72,7 +78,11 @@ const gameBoard = (function () {
 
     }
 
-    return { getCellValue, getBoardState, getRow, getColumn, getDiagonal, changePosition, isFilled };
+    const restartBoard = function () {
+        board = originalBoard;
+    }
+
+    return { getCellValue, getBoardState, getRow, getColumn, getDiagonal, changePosition, isFilled, restartBoard };
 })();
 
 // This IIFE module pattern handles all the game logic itself. It is NOT concerned with player input right now
@@ -189,7 +199,9 @@ const domManager = (function () {
         })
 
         changePlayersButton.addEventListener("click", () => console.log("hello you clicked changeplayers!"));
-        rematchButton.addEventListener("click", () => console.log("hello you clicked rematch!"));
+        rematchButton.addEventListener("click", () => {
+            rematch();
+        });
 
         // Add event listener for test win dialog (will delete later! this is just for testing)
         testWinButton.addEventListener("click", function () {
@@ -268,6 +280,15 @@ const domManager = (function () {
             return false;
         }
         return true;
+    }
+
+    // Rematch button function
+    function rematch() {
+        console.log("Board state before restart is: ");
+        gameBoard.getBoardState();
+        gameBoard.restartBoard();
+        console.log("Board state after restart is:");
+        gameBoard.getBoardState();
     }
 
     return { retrieveCellNodes, addEventListeners, data };
