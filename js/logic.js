@@ -151,6 +151,10 @@ const domManager = (function () {
     // Test DOMs for the win screen
     const testWinButton = document.querySelector(".test-winscreen");
     const winDialog = document.querySelector(".win-screen");
+
+    // Win Screen Buttons
+    const changePlayersButton = document.querySelector(".change-players-button");
+    const rematchButton = document.querySelector(".rematch-button");
     let firstTime = true;
     let currentPlayerTurn = undefined;
 
@@ -183,6 +187,9 @@ const domManager = (function () {
                 key.preventDefault();
             }
         })
+
+        changePlayersButton.addEventListener("click", () => console.log("hello you clicked changeplayers!"));
+        rematchButton.addEventListener("click", () => console.log("hello you clicked rematch!"));
 
         // Add event listener for test win dialog (will delete later! this is just for testing)
         testWinButton.addEventListener("click", function () {
