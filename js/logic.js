@@ -202,7 +202,14 @@ const domManager = (function () {
             }
         })
 
-        changePlayersButton.addEventListener("click", () => console.log("hello you clicked changeplayers!"));
+        changePlayersButton.addEventListener("click", () => {
+            dialog.showModal();
+            rematch();
+            clearScreen();
+            firstTime = true;
+            winDialog.close();
+        });
+
         rematchButton.addEventListener("click", () => {
             rematch();
             clearScreen();
