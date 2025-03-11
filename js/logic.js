@@ -163,8 +163,7 @@ const domManager = (function () {
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
     const submitDialog = document.querySelector(".submit-dialog");
-    // Test DOMs for the win screen
-    const testWinButton = document.querySelector(".test-winscreen");
+
     const winDialog = document.querySelector(".win-screen");
 
     // Win Screen Buttons
@@ -210,10 +209,6 @@ const domManager = (function () {
             winDialog.close();
         });
 
-        // Add event listener for test win dialog (will delete later! this is just for testing)
-        testWinButton.addEventListener("click", function () {
-            winDialog.showModal();
-        })
 
     }
 
