@@ -95,6 +95,8 @@ const game = (function () {
     const playerXScoreText = document.querySelector(".player-1-score");
     const playerOScoreText = document.querySelector(".player-2-score");
 
+    const winnerText = document.querySelector(".win-screen h2");
+
     // Checks if there's a winner at that particular spot. As in, it checks the surrounding row and column
     // It returns true if there's a winner and false if there isn't
     const checkWinner = (row, column) => {
@@ -108,12 +110,14 @@ const game = (function () {
 
         if (xRowWin || xDiagonalWin || xColumnWin) {
             console.log("Player X wins!");
+            winnerText.textContent = "Player X wins!";
             playerXScoreText.textContent = `Player X Score: ${++playerXScore}`;
 
             return true;
         }
         else if (oRowWin || oDiagonalWin || oColumnWin) {
             console.log("Player O wins!");
+            winnerText.textContent = "Player O wins!";
             playerOScoreText.textContent = `Player O Score: ${++playerOScore}`;
             return true;
         }
@@ -124,11 +128,16 @@ const game = (function () {
     // Returns true if there is a tie, false if there isn't
     const checkTie = (row, column) => {
         // If there is no winner at a given row and column AND the gameBoard is filled we can check if there's a tie
-        if (!checkWinner(row, column) && gameBoard.isFilled()) {
+        const winnerAndTie = [checkWinner(row, column)];
+
+        if (!winnerAndTie[0] && gameBoard.isFilled()) {
             console.log("It's a tie tarnished!");
-            return true;
+            winnerText.textContent = "It's a tie!";
+            winnerAndTie.push(true);
+            return winnerAndTie;
         }
-        return false;
+        winnerAndTie.push(false);
+        return winnerAndTie;
     }
 
     // A method for checking who goes first.
@@ -236,7 +245,13 @@ const domManager = (function () {
             gameBoard.changePosition(rowValue, columnValue, e.textContent);
             gameBoard.getBoardState();
             // Always checks the current cell if a winner has been found
-            game.checkTie(rowValue, columnValue);
+            let gameWinnerTie = game.checkTie(rowValue, columnValue);
+            let isWinner = gameWinnerTie[0];
+            let isTie = gameWinnerTie[1];
+
+            if (isWinner || isTie) {
+                winDialog.showModal();
+            }
 
         }
     }
