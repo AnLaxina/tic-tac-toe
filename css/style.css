@@ -57,7 +57,27 @@ form {
     align-self: center;
 }
 
-.submit-dialog:hover {
+.change-players-button,
+.rematch-button {
+    font-family: kanit-regular, monospace;
+    width: 100px;
+    height: 50px;
+    border-radius: 15px;
+}
+
+.win-screen {
+    text-align: center;
+}
+
+.win-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.submit-dialog:hover,
+.change-players-button:hover,
+.rematch-button:hover {
     cursor: pointer;
     background-color: lightgray;
 }
