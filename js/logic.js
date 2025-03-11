@@ -137,24 +137,28 @@ const game = (function () {
         }
     }
 
-    const playTurn = (firstPlayer) => {
-        if (firstPlayer === "player-1") {
-            player1Turn = true;
-        }
-        else if (firstPlayer === "player-2") {
-            player2Turn = true;
-        }
+    const playTurn = () => {
+        // I think the reason why this is happening is because it ALWAYS checks if firstPlayer == player-1 but
+        // the firstPlyaer variable never changes! I think that's why!
+
+        // if (firstPlayer === "player-1") {
+        //     player1Turn = true;
+        // }
+        // else {
+        //     player2Turn = true;
+        // };
         // I'm gonna forget my thought process so:
         // every time the player clicks a cell, we always check if that cell has been placed already
         // if not, we can place one at that location, otherwise, don't change jack Tarnished.
         // once a cell has been placed, we swap the player1Turn and the player2Turn like a pattern
-
+        console.log(`player1Turn: ${player1Turn}`);
+        console.log(`player2Turn: ${player2Turn}`);
         if (player1Turn) {
             player1Turn = false;
             player2Turn = true;
             return "player-1";
         }
-        else {
+        else if (player2Turn) {
             player2Turn = false;
             player1Turn = true;
             return "player-2";
@@ -163,7 +167,7 @@ const game = (function () {
 
     const alreadyPlaced = (row, column) => gameBoard.getCellValue(row, column) === 0 ? false : true;
 
-    return { checkWinner, checkTie, checkFirstPlayer, playTurn, alreadyPlaced };
+    return { checkWinner, checkTie, checkFirstPlayer, playTurn, alreadyPlaced, player1Turn, player2Turn };
 })();
 
 const domManager = (function () {
@@ -173,6 +177,8 @@ const domManager = (function () {
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
     const submitDialog = document.querySelector(".submit-dialog");
+    let firstTime = true;
+    let currentPlayerTurn = undefined;
 
     // Show dialog immediately when the page loads for player selection
     dialog.showModal();
@@ -211,11 +217,32 @@ const domManager = (function () {
         const columnValue = e.getAttribute("data-column");
         let playerStartChoice = game.checkFirstPlayer(data["first"]);
 
-
         // Only changes the position of the board if there HAS NOT BEEN a filled cell based on the row and column
         if (!game.alreadyPlaced(rowValue, columnValue)) {
 
-            let currentPlayerTurn = game.playTurn(playerStartChoice);
+            console.log(`RIght now, firstTime is: ${firstTime}`);
+            if (firstTime && playerStartChoice === "player-1") {
+                console.log("it's true! You chose player 1 as the start!");
+                currentPlayerTurn = "player-1";
+                firstTime = false;
+            }
+            else if (firstTime && playerStartChoice === "player-2") {
+                currentPlayerTurn = "player-2";
+                console.log("it's true! You chose player 2 as the start!\ngame.player2Turn is " + game.player2Turn);
+                firstTime = false;
+            }
+            else if (currentPlayerTurn === "player-1") {
+                currentPlayerTurn = "player-2";
+            }
+            else if (currentPlayerTurn === "player-2") {
+                currentPlayerTurn = "player-1";
+            }
+
+
+
+            // testing, right now there's a bug where if the player that goes first is Player 1, it never
+            // changes turns
+            console.log(`currentPlayerTurn: ${currentPlayerTurn}`);
             e.textContent = data[currentPlayerTurn];
             gameBoard.changePosition(rowValue, columnValue, e.textContent);
             gameBoard.getBoardState();
