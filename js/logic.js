@@ -16,12 +16,6 @@ const gameBoard = (function () {
         [0, 0, 0],
         [0, 0, 0]];
 
-    // This board is for when the game restarts if a user clicks rematch
-    const originalBoard =
-        [[0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]];
-
     // Methods for the gameBoard "class"
 
     // Gets the value of that particular cell given a row and column
@@ -79,7 +73,9 @@ const gameBoard = (function () {
     }
 
     const restartBoard = function () {
-        board = originalBoard;
+        board = [[0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]];
     }
 
     return { getCellValue, getBoardState, getRow, getColumn, getDiagonal, changePosition, isFilled, restartBoard };
@@ -202,6 +198,7 @@ const domManager = (function () {
         rematchButton.addEventListener("click", () => {
             rematch();
             clearScreen();
+            winDialog.close();
         });
 
         // Add event listener for test win dialog (will delete later! this is just for testing)
