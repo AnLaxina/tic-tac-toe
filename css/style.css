@@ -14,8 +14,12 @@ body {
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-align: center;
     height: 50px;
+    width: 500px;
 }
 
 form {
@@ -88,4 +92,9 @@ form {
     height: 50px;
     justify-content: space-between;
 
+}
+
+.back-arrow {
+    width: 25px;
+    height: 25px;
 }
