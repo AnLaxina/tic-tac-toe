@@ -153,7 +153,15 @@ const game = (function () {
 
     const alreadyPlaced = (row, column) => gameBoard.getCellValue(row, column) === 0 ? false : true;
 
-    return { checkWinner, checkTie, checkFirstPlayer, alreadyPlaced };
+    const restartScore = () => {
+        playerXScore = 0;
+        playerOScore = 0;
+
+        playerXScoreText.textContent = "Player X Score: 0";
+        playerOScoreText.textContent = "Player O Score: 0";
+    }
+
+    return { checkWinner, checkTie, checkFirstPlayer, alreadyPlaced, restartScore };
 })();
 
 const domManager = (function () {
@@ -207,6 +215,7 @@ const domManager = (function () {
             rematch();
             clearScreen();
             firstTime = true;
+            game.restartScore();
             winDialog.close();
         });
 
